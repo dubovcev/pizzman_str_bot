@@ -7,22 +7,29 @@ import os
 bot = Bot(token='5611740291:AAFrvlpoKSw4PnCzXdkzMGqA4uOP3WQyu78')
 dp = Dispatcher(bot)
 
+# ===== Код выполняемый при старте бота =====
+async def on_startup(_):
+    print('Мы онлайн')
+
+# =====      Обработка команд бота      =====
 @dp.message_handler(commands=['start'])
 async def command_start(message : types.Message):
-    try:
-        await bot.send_message(message.from_user.id, 'Вы зашли в пиццерию "Пицман и Калачев".\nДобро пожаловать!')
-        await message.delete
-    except:
-        await message.reply('Общение с ботом только через личные сообщения, напишите ему:\nhttps://t.me/pizzman_str_bot')
+    await bot.send_message(message.from_user.id, 'Вы зашли в пиццерию "Пицман и Калачев".\nДобро пожаловать!')
 
-@dp.message_handler(commands=['Режим_работы'])
+@dp.message_handler()
 async def command_rejim_rabot(message : types.Message):
-    await bot.send_message(message.from_user.id, 'Прием заявок осуществляется ежедневно с 9:00 до 21:00')
+    if message.text == 'Режим работы':
+        await bot.send_message(message.from_user.id, 'Прием заявок осуществляется ежедневно с 9:00 до 21:00')
+    elif message.text == 'Помощь':
+        await bot.send_message(message.from_user.id,'Данный телеграм бот предназначен для заказа вкусняшек ;) \n\n Автор: Алексей Дубовцев')
 
+# Эхо ответ
 @dp.message_handler()
 async def echo_send(message : types.Message):
     await message.answer(message.text)
+    #if message.text == 'Режим работы':
+    #    await bot.send_message(message.from_user.id, '2 Прием заявок осуществляется ежедневно с 9:00 до 21:00')
 
 
-
-executor.start_polling(dp, skip_updates=True)
+# =====        Запуск самого бота         =====
+executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
