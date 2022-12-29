@@ -4,7 +4,7 @@ from aiogram.utils import executor
 
 import os
 
-bot = Bot(token='5611740291:AAFrvlpoKSw4PnCzXdkzMGqA4uOP3WQyu78')
+bot = Bot(token='5611740291:AAFrvlpoKSw4PnCzXdkzMGqA4uOP3WQyu78') #поменять на 7
 dp = Dispatcher(bot)
 
 # ===== Код выполняемый при старте бота =====
